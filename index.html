@@ -1,35 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VIKI$AI$WORLD</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>VIKI AI Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header class="header">
-    <h1>VIKI$AI$WORLD</h1>
-    <p>Build. Organize. Think Smart.</p>
-    <div class="auth-buttons">
-      <button id="loginBtn">Login</button>
-      <button id="signupBtn">Sign Up</button>
-    </div>
-  </header>
+<div class="container">
+  <h2>VIKI AI</h2>
 
-  <main class="dashboard">
-    <h2>Dashboard</h2>
-    <p class="locked">Login required to access projects</p>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
 
-    <div class="project-board">
-      <div class="project-card">Sample Project</div>
-    </div>
-  </main>
+  <button onclick="loginUser()">Login</button>
+  <button onclick="signupUser()">Sign Up</button>
 
-  <footer>
-    <p>© 2025 VIKI$AI$WORLD | Phase 1</p>
-  </footer>
+  <p id="msg"></p>
+</div>
 
-  <script src="app.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // 🔥 Firebase Config (FINAL)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBn9doD99wq5gU8kCVu3g8Kz16iabZqGKA",
+    authDomain: "viki-49b73.firebaseapp.com",
+    projectId: "viki-49b73",
+    storageBucket: "viki-49b73.firebasestorage.app",
+    messagingSenderId: "92668810768",
+    appId: "1:92668810768:web:d0029f292bbf16e94d5c95"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // ⚠️ CHANGE ONLY IF YOUR ADMIN EMAIL IS DIFFERENT
+  const ADMIN_EMAIL = "admin@viki.ai";
+
+  const msg = document.getElementById("msg");
+
+  window.loginUser = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        if (res.user.email === ADMIN_EMAIL) {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "dashboard.html";
+        }
+      })
+      .catch((err) => {
+        msg.innerText = err.message;
+      });
+  };
+
+  window.signupUser = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        msg.innerText = "Signup successful. Now login.";
+      })
+      .catch((err) => {
+        msg.innerText = err.message;
+      });
+  };
+</script>
+
 </body>
 </html>
