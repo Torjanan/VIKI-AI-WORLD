@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VIKI$WORLD – Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{background:linear-gradient(135deg,#6a11cb,#2575fc);font-family:Arial;margin:0}
+    .card{background:white;max-width:360px;margin:80px auto;padding:25px;border-radius:12px}
+    input,button{width:100%;padding:12px;margin-top:10px}
+    button{background:#1877f2;color:white;border:none;border-radius:8px}
+    h2{text-align:center}
+    .err{color:red;text-align:center;margin-top:10px}
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>VIKI AI</h2>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <button onclick="signup()">Sign Up</button>
+  <div id="msg" class="err"></div>
+</div>
+
+<script src="firebase.js"></script>
+<script>
+function signup(){
+  auth.createUserWithEmailAndPassword(
+    email.value,password.value
+  ).then(()=>{
+    window.location.href="index.html";
+  }).catch(e=>msg.innerText=e.message);
+}
+
+function login(){
+  auth.signInWithEmailAndPassword(
+    email.value,password.value
+  ).then(()=>{
+    window.location.href="index.html";
+  }).catch(e=>msg.innerText=e.message);
+}
+</script>
+</body>
+</html>
