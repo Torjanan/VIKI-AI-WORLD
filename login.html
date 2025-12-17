@@ -70,7 +70,12 @@
     </div>
 
     <script>
-        // Future Firebase integration point
+        // Firebase already initialized in index.html (but safe to check)
+        if (!firebase.apps.length) {
+            // If not initialized (rare case), initialize here too
+            // Copy the same config from index.html
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -82,9 +87,15 @@
                 return;
             }
             
-            // Demo login success → redirect to dashboard
-            alert('Login successful! Welcome to VIKI AI World 🎉');
-            window.location.href = 'dashboard.html';
+            // Real Firebase Authentication
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert('Login successful! Welcome back 🎉');
+                    window.location.href = 'dashboard.html';
+                })
+                .catch((error) => {
+                    alert('Login failed: ' + error.message);
+                });
         });
     </script>
 </body>
