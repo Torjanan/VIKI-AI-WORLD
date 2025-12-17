@@ -69,23 +69,34 @@
         <a href="index.html">Back to Home</a>
         <a href="login.html">Login</a>
     </div>
+
     <script>
-        // Future Firebase integration: Replace alert with Firebase auth logic
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
+            
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            
             if (!email || !password || !confirmPassword) {
                 alert('Please fill in all fields.');
                 return;
             }
+            
             if (password !== confirmPassword) {
                 alert('Passwords do not match.');
                 return;
             }
-            // Demo success for now; integrate Firebase Auth here later
-            alert('Sign up successful!');
+            
+            // Real Firebase Create User
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert('Sign up successful! Welcome to VIKI AI World 🚀');
+                    window.location.href = 'dashboard.html';
+                })
+                .catch((error) => {
+                    alert('Sign up failed: ' + error.message);
+                });
         });
     </script>
 </body>
