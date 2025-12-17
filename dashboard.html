@@ -11,6 +11,7 @@
             padding: 0;
             background-color: #f0f2f5;
             color: #333;
+            display: none; /* Hide until auth check */
         }
         header {
             background-color: #007bff;
@@ -55,7 +56,7 @@
     <div class="container">
         <div class="card">
             <h2>Welcome back! 👋</h2>
-            <p>You are now logged in. Yeh dashboard hai jahan future mein chat, AI tools, history wagairah aayenge.</p>
+            <p>You are now logged in. Future mein yahan real AI chat interface aayega.</p>
         </div>
 
         <div class="card">
@@ -66,7 +67,29 @@
                • Settings & Profile</p>
         </div>
 
-        <a href="index.html" class="logout">← Logout</a>
+        <a href="#" id="logout" class="logout">← Logout</a>
     </div>
+
+    <script>
+        // Auth state check
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // Logged in → show dashboard
+                document.body.style.display = 'block';
+            } else {
+                // Not logged in → redirect
+                alert('Please login first!');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Logout button
+        document.getElementById('logout').addEventListener('click', function(e) {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
 </body>
 </html>
