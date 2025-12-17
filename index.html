@@ -5,44 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIKI AI World</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             background-color: #f4f4f4;
             color: #333;
+            padding: 20px;
         }
         header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin: 0;
         }
         p {
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-top: 0.5rem;
+            opacity: 0.9;
         }
         .buttons {
             display: flex;
             flex-direction: column;
-            width: 80%;
-            max-width: 300px;
+            gap: 1rem;
+            width: 100%;
+            max-width: 320px;
         }
         button {
-            padding: 1rem;
-            margin: 0.5rem 0;
-            font-size: 1rem;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         .login-btn {
             background-color: #007bff;
@@ -58,23 +64,13 @@
         .signup-btn:hover {
             background-color: #218838;
         }
-        @media (min-width: 768px) {
-            .buttons {
-                flex-direction: row;
-                justify-content: space-around;
-            }
-            button {
-                width: 45%;
-            }
-        }
     </style>
 
-    <!-- Firebase Compat SDK (purana style jo humare code ke saath kaam karta hai) -->
+    <!-- Firebase Compat SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
     <script>
-        // Tumhara latest Firebase config (storageBucket ko .appspot.com kiya hai)
         const firebaseConfig = {
           apiKey: "AIzaSyC5i05JoeOGyw6qqWty8gzDEdoe5MpIoKk",
           authDomain: "viki-ai-world.firebaseapp.com",
@@ -84,12 +80,18 @@
           appId: "1:88099998596:web:8bf4b8ba117fc0f6e76bd1"
         };
 
-        // Initialize Firebase (compat style)
         firebase.initializeApp(firebaseConfig);
     </script>
 </head>
 <body>
     <header>
         <h1>VIKI AI World</h1>
-        <p>Welcome to the future of AI interaction</p>
-    </header
+        <p>Welcome from "TORJANAN"</p>
+    </header>
+
+    <div class="buttons">
+        <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+        <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
+    </div>
+</body>
+</html>
