@@ -69,22 +69,22 @@
         }
     </style>
 
-    <!-- Firebase SDK (Compat version for old-style firebase.auth()) -->
+    <!-- Firebase Compat SDK (purana style jo humare code ke saath kaam karta hai) -->
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
     <script>
-        // 🔥 YAHAN APNA FIREBASE CONFIG PASTE KAR DO (Firebase console se copy karna) 🔥
+        // Tumhara latest Firebase config (storageBucket ko .appspot.com kiya hai)
         const firebaseConfig = {
-          apiKey: "YOUR_API_KEY",
-          authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-          projectId: "YOUR_PROJECT_ID",
-          storageBucket: "YOUR_PROJECT_ID.appspot.com",
-          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-          appId: "YOUR_APP_ID"
+          apiKey: "AIzaSyC5i05JoeOGyw6qqWty8gzDEdoe5MpIoKk",
+          authDomain: "viki-ai-world.firebaseapp.com",
+          projectId: "viki-ai-world",
+          storageBucket: "viki-ai-world.appspot.com",
+          messagingSenderId: "88099998596",
+          appId: "1:88099998596:web:8bf4b8ba117fc0f6e76bd1"
         };
 
-        // Initialize Firebase
+        // Initialize Firebase (compat style)
         firebase.initializeApp(firebaseConfig);
     </script>
 </head>
@@ -92,10 +92,4 @@
     <header>
         <h1>VIKI AI World</h1>
         <p>Welcome to the future of AI interaction</p>
-    </header>
-    <div class="buttons">
-        <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-        <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
-    </div>
-</body>
-</html>
+    </header
