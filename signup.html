@@ -1,113 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - VIKI AI World</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        form {
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        input {
-            padding: 1rem;
-            font-size: 1.1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        button {
-            padding: 1.2rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .links {
-            margin-top: 2rem;
-            text-align: center;
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-            margin: 0 1rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup – VIKI AI World</title>
 
-    <!-- Firebase Compat SDK (ab yahan bhi load) -->
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-    <script>
-        const firebaseConfig = {
-          apiKey: "AIzaSyC5i05JoeOGyw6qqWty8gzDEdoe5MpIoKk",
-          authDomain: "viki-ai-world.firebaseapp.com",
-          projectId: "viki-ai-world",
-          storageBucket: "viki-ai-world.appspot.com",
-          messagingSenderId: "88099998596",
-          appId: "1:88099998596:web:8bf4b8ba117fc0f6e76bd1"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-    </script>
+  <style>
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .card {
+      background: #020617;
+      padding: 22px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 380px;
+    }
+    h1 { color: #38bdf8; text-align: center; }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: none;
+      background: #020617;
+      color: #fff;
+      outline: 1px solid #1f2937;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    a {
+      display: block;
+      margin-top: 12px;
+      text-align: center;
+      color: #22d3ee;
+      text-decoration: none;
+      font-size: 13px;
+    }
+  </style>
 </head>
+
 <body>
-    <form id="signupForm">
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-        <button type="submit">Sign Up</button>
-    </form>
+  <div class="card">
+    <h1>Signup</h1>
 
-    <div class="links">
-        <a href="index.html">Back to Home</a>
-        <a href="login.html">Login</a>
-    </div>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
 
-    <script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (!email || !password || !confirmPassword) {
-                alert('Please fill in all fields.');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-                return;
-            }
-            
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    alert('Sign up successful! Welcome to VIKI AI World 🚀');
-                    window.location.href = 'dashboard.html';
-                })
-                .catch((error) => {
-                    alert('Sign up failed: ' + error.message);
-                });
+    <button onclick="signup()">Create Account</button>
+
+    <a href="login.html">Already have account? Login</a>
+    <a href="index.html">← Back to Home</a>
+  </div>
+
+  <script>
+    // 🔥 SAME CONFIG JO LOGIN PAGE PAR HAI
+    var firebaseConfig = {
+      apiKey: "PASTE_YOUR_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    function signup() {
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Signup successful");
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          alert(error.message);
         });
-    </script>
+    }
+  </script>
 </body>
 </html>
