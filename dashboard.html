@@ -3,131 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - VIKI Social</title>
+    <title>VIKI Social - Feed</title>
     <style>
+        * { box-sizing: border-box; }
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f2f5;
-            color: #333;
-            display: none; /* Hide until auth check */
+            color: #1c1e21;
+            display: none;
+            padding-bottom: 60px;
         }
         header {
-            background-color: #1877f2;
-            color: white;
-            padding: 1rem;
-            text-align: center;
+            background: #ffffff;
+            border-bottom: 1px solid #dddfe2;
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
             z-index: 100;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1877f2;
+        }
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .icon {
+            width: 40px;
+            height: 40px;
+            background: #e4e6eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
         .container {
             max-width: 600px;
-            margin: 70px auto 20px;
-            padding: 1rem;
+            margin: 60px auto 20px;
+            padding: 0 1rem;
+        }
+        .stories {
+            display: flex;
+            gap: 0.8rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+        }
+        .story {
+            width: 100px;
+            height: 170px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.5)), url('https://via.placeholder.com/100x170?text=Story');
+            background-size: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+            position: relative;
+            color: white;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: flex-end;
+            padding: 0.5rem;
         }
         .create-post {
             background: white;
             padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
             margin-bottom: 1rem;
         }
-        textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            resize: none;
-            font-size: 1rem;
-        }
-        .post-btn {
-            background: #1877f2;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            font-weight: bold;
-        }
-        .feed {
-            margin-top: 1rem;
-        }
-        .post {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
-        }
-        .post-header {
+        .post-input {
             display: flex;
             align-items: center;
-            margin-bottom: 0.5rem;
+            gap: 0.8rem;
         }
         .avatar {
             width: 40px;
             height: 40px;
             background: #1877f2;
             border-radius: 50%;
-            margin-right: 0.5rem;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-weight: bold;
         }
-        .actions {
+        .post-textarea {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: #f0f2f5;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+        .post-actions {
             display: flex;
             justify-content: space-around;
-            margin-top: 1rem;
-            padding-top: 0.5rem;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
             border-top: 1px solid #eee;
         }
-        .action-btn {
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #65676b;
+            cursor: pointer;
+        }
+        .feed .post {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .post-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .post-body {
+            padding: 0 1rem 1rem;
+        }
+        .post-text {
+            margin: 0.5rem 0;
+        }
+        .post-media {
+            width: 100%;
+            height: 300px;
+            background: #eee;
+            margin: 0.5rem 0;
+        }
+        .post-reactions {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #eee;
+        }
+        .reaction-btn {
             background: none;
             border: none;
+            padding: 0.8rem;
+            flex: 1;
             cursor: pointer;
             color: #65676b;
             font-weight: bold;
         }
-        .like-btn.liked {
+        .liked {
             color: #1877f2;
         }
-        .logout {
+        .bottom-nav {
             position: fixed;
-            bottom: 20px;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+        }
+        .nav-item {
+            padding: 0.8rem;
+            color: #65676b;
+            font-size: 1.5rem;
+        }
+        .active {
+            color: #1877f2;
+        }
+        .logout-btn {
+            position: fixed;
+            bottom: 70px;
             right: 20px;
             background: #e4e6eb;
-            padding: 1rem;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>VIKI Social</h1>
+        <div class="logo">VIKI</div>
+        <div class="header-actions">
+            <div class="icon">🔍</div>
+            <div class="icon">🔔</div>
+            <div class="icon">💬</div>
+        </div>
     </header>
 
     <div class="container">
+        <div class="stories">
+            <div class="story" style="background-image: url('https://via.placeholder.com/100x170?text=+Create+Story');">+ Create Story</div>
+            <div class="story">Friend 1</div>
+            <div class="story">Friend 2</div>
+            <div class="story">Friend 3</div>
+        </div>
+
         <div class="create-post">
-            <textarea id="postText" placeholder="What's on your mind?"></textarea>
-            <button class="post-btn" onclick="createPost()">Post</button>
+            <div class="post-input">
+                <div class="avatar">U</div>
+                <input type="text" id="postText" class="post-textarea" placeholder="What's on your mind?">
+            </div>
+            <div class="post-actions">
+                <div class="post-action">📸 Photo</div>
+                <div class="post-action">😊 Feeling</div>
+                <div class="post-action" onclick="createPost()">📤 Post</div>
+            </div>
         </div>
 
         <div class="feed" id="feed">
-            <!-- Posts will appear here -->
-            <p style="text-align:center; color:#666;">No posts yet. Create one above!</p>
+            <p style="text-align:center; color:#666; padding:2rem;">No posts yet. Create one above!</p>
         </div>
     </div>
 
-    <a href="#" id="logout" class="logout">Logout</a>
+    <div class="bottom-nav">
+        <div class="nav-item active">🏠</div>
+        <div class="nav-item">👥</div>
+        <div class="nav-item">▶️</div>
+        <div class="nav-item">🛒</div>
+        <div class="nav-item">👤</div>
+    </div>
 
-    <!-- Firebase SDK -->
+    <div class="logout-btn" id="logout">🚪</div>
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
@@ -142,33 +255,26 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // Auth check
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 document.body.style.display = 'block';
                 loadPosts();
             } else {
-                alert('Please login first!');
                 window.location.href = 'login.html';
             }
         });
 
-        // Logout
-        document.getElementById('logout').addEventListener('click', (e) => {
-            e.preventDefault();
-            firebase.auth().signOut().then(() => {
-                window.location.href = 'index.html';
-            });
+        document.getElementById('logout').addEventListener('click', () => {
+            firebase.auth().signOut().then(() => window.location.href = 'index.html');
         });
 
-        // Posts functions (localStorage demo - real mein Firebase Firestore use karenge later)
         function createPost() {
             const text = document.getElementById('postText').value.trim();
-            if (!text) return alert('Write something!');
+            if (!text) return;
 
             const posts = JSON.parse(localStorage.getItem('posts') || '[]');
             posts.unshift({
-                text: text,
+                text,
                 likes: 0,
                 comments: [],
                 timestamp: new Date().toLocaleString()
@@ -182,10 +288,10 @@
             const feed = document.getElementById('feed');
             const posts = JSON.parse(localStorage.getItem('posts') || '[]');
             if (posts.length === 0) {
-                feed.innerHTML = '<p style="text-align:center; color:#666;">No posts yet. Create one above!</p>';
+                feed.innerHTML = '<p style="text-align:center; color:#666; padding:2rem;">No posts yet. Create one above!</p>';
                 return;
             }
-            feed.innerHTML = posts.map((post, index) => `
+            feed.innerHTML = posts.map((post, i) => `
                 <div class="post">
                     <div class="post-header">
                         <div class="avatar">U</div>
@@ -194,13 +300,18 @@
                             <small>${post.timestamp}</small>
                         </div>
                     </div>
-                    <p>${post.text}</p>
-                    <div class="actions">
-                        <button class="action-btn like-btn" onclick="likePost(${index})">
+                    <div class="post-body">
+                        <p class="post-text">${post.text}</p>
+                        <div class="post-media"></div>
+                    </div>
+                    <div class="post-reactions">
+                        <button class="reaction-btn ${post.likes > 0 ? 'liked' : ''}" onclick="likePost(${i})">
                             👍 Like (${post.likes})
                         </button>
-                        <button class="action-btn" onclick="alert('Comments coming soon!')">💬 Comment</button>
-                        <button class="action-btn">↗️ Share</button>
+                        <button class="reaction-btn" onclick="alert('Comment feature coming soon!')">
+                            💬 Comment
+                        </button>
+                        <button class="reaction-btn">↗️ Share</button>
                     </div>
                 </div>
             `).join('');
@@ -214,4 +325,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
