@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signup – VIKI AI World</title>
 
-  <!-- Firebase v8 -->
+  <!-- Firebase v8 CDN (GitHub Pages friendly) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
@@ -63,7 +63,7 @@
     <h1>Signup</h1>
 
     <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
+    <input type="password" id="password" placeholder="Password (min 6 chars)" />
 
     <button onclick="signup()">Create Account</button>
 
@@ -72,19 +72,29 @@
   </div>
 
   <script>
-    // 🔥 SAME CONFIG JO LOGIN PAGE PAR HAI
+    // ✅ SAME FIREBASE CONFIG (JO LOGIN MEIN HAI)
     var firebaseConfig = {
-      apiKey: "PASTE_YOUR_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyBn9doD99wq5gU8kCVu3g8Kz16iabZqGKA",
+      authDomain: "viki-49b73.firebaseapp.com",
+      projectId: "viki-49b73",
+      storageBucket: "viki-49b73.appspot.com",
+      messagingSenderId: "92668810768",
+      appId: "1:92668810768:web:d0029f292bbf16e94d5c95"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    // 🔴 IMPORTANT: initializeApp sirf ek martaba
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
 
     function signup() {
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
+
+      if (email === "" || password === "") {
+        alert("Email aur password zaroori hai");
+        return;
+      }
 
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
